@@ -3,7 +3,7 @@ module.exports = ({ env }) => ({
     client: "postgres",
     connection: {
       host: "127.0.0.1",
-      port: 5432,
+      port: 32768,
       database: "strapi_portfolio",
       user: "postgres",
       password: "postgrespw",
