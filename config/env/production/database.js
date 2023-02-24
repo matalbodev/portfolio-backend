@@ -1,18 +1,20 @@
-module.exports = ({ env }) => ({
-  connection: {
-    client: "postgres",
+const { parse } = require("pg-connection-string");
+
+module.exports = ({ env }) => {
+  const { host, port, database, user, password } = parse(env("DATABASE_URL"));
+
+  return {
     connection: {
-      host: env("DATABASE_HOST", "127.0.0.1"),
-      port: env("DATABASE_PORT", "32768"),
-      database: env("DATABASE_NAME", "strapi_portfolio"),
-      user: env("DATABASE_USERNAME", "postgres"),
-      password: env("DATABASE_PASSWORD", "postgrespw"),
-      schema: env("DATABASE_URL", "public"), // Not required
-      ssl:
-        process.env.NODE_ENV === "production"
-          ? { rejectUnauthorized: false }
-          : false,
+      client: "postgres",
+      connection: {
+        host,
+        port,
+        database,
+        user,
+        password,
+        ssl: { rejectUnauthorized: false },
+      },
+      debug: false,
     },
-    debug: false,
-  },
-});
+  };
+};
